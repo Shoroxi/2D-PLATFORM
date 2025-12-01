@@ -37,7 +37,6 @@ class Game {
         this.level = 1;
         this.lives = Constants.INITIAL_LIVES;
         this.gameLoopId = null;
-        this.lastFrameTime = 0;
 
         // Уровни
         this.levels = this.createLevels();
@@ -428,7 +427,6 @@ class Game {
     start() {
         if (this.state === Constants.GAME_STATE.MENU || this.state === Constants.GAME_STATE.PAUSED) {
             this.state = Constants.GAME_STATE.PLAYING;
-            this.lastFrameTime = 0; // Сбрасываем для правильного delta time
             this.gameLoop();
         }
     }
@@ -444,7 +442,6 @@ class Game {
             }
         } else if (this.state === Constants.GAME_STATE.PAUSED) {
             this.state = Constants.GAME_STATE.PLAYING;
-            this.lastFrameTime = 0; // Сбрасываем для правильного delta time
             this.gameLoop();
         }
     }
@@ -477,7 +474,6 @@ class Game {
             this.updateUI();
             this.hideLevelComplete();
             this.state = Constants.GAME_STATE.PLAYING;
-            this.lastFrameTime = 0; // Сбрасываем для правильного delta time
             this.gameLoop();
         } else {
             // Все уровни пройдены
@@ -710,27 +706,12 @@ class Game {
     }
 
     /**
-     * Игровой цикл с delta time
+     * Игровой цикл
      */
-    gameLoop(currentTime = 0) {
-        // Вычисляем delta time (в секундах)
-        let deltaTime = 0;
-        if (this.lastFrameTime > 0) {
-            deltaTime = (currentTime - this.lastFrameTime) / 1000; // Конвертируем в секунды
-            // Ограничиваем delta time для предотвращения скачков
-            deltaTime = Math.min(deltaTime, 0.1); // Максимум 100ms = 10 FPS минимум
-        }
-        this.lastFrameTime = currentTime;
-        
-        // Если это первый кадр, пропускаем обновление
-        if (deltaTime === 0) {
-            this.gameLoopId = requestAnimationFrame((time) => this.gameLoop(time));
-            return;
-        }
-        
-        this.update(deltaTime);
+    gameLoop() {
+        this.update();
         this.render();
-        this.gameLoopId = requestAnimationFrame((time) => this.gameLoop(time));
+        this.gameLoopId = requestAnimationFrame(() => this.gameLoop());
     }
 
     /**
@@ -771,4 +752,3 @@ class Game {
         document.getElementById('levelComplete').classList.add('hidden');
     }
 }
-
