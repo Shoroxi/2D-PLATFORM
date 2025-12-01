@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.game-container {
+    position: relative;
+    background: #1a1a2e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ui-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.score-panel {
+    display: flex;
+    gap: 20px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.score-panel span {
+    color: #ffd700;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+#gameCanvas {
+    display: block;
+    background: linear-gradient(to bottom, #87ceeb 0%, #98d8c8 50%, #6b8e23 100%);
+    border: 3px solid #fff;
+    border-radius: 5px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.game-over, .level-complete {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(26, 26, 46, 0.95);
+    color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.game-over h2, .level-complete h2 {
+    margin-bottom: 20px;
+    font-size: 32px;
+    color: #ffd700;
+}
+
+.game-over p {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.instructions {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.instructions p {
+    margin: 5px 0;
+}
+

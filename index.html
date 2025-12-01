@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D Платформер</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="ui-panel">
+            <div class="score-panel">
+                <div class="score">Очки: <span id="score">0</span></div>
+                <div class="level">Уровень: <span id="level">1</span></div>
+                <div class="lives">Жизни: <span id="lives">3</span></div>
+            </div>
+            <div class="controls">
+                <button id="startBtn" class="btn">Старт</button>
+                <button id="pauseBtn" class="btn">Пауза</button>
+                <button id="restartBtn" class="btn">Рестарт</button>
+            </div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div id="gameOver" class="game-over hidden">
+            <h2 id="gameOverText">Игра окончена!</h2>
+            <p>Финальный счет: <span id="finalScore">0</span></p>
+            <button id="restartGameBtn" class="btn">Играть снова</button>
+        </div>
+        <div id="levelComplete" class="level-complete hidden">
+            <h2>Уровень пройден!</h2>
+            <button id="nextLevelBtn" class="btn">Следующий уровень</button>
+        </div>
+        <div class="instructions">
+            <p><strong>Управление:</strong></p>
+            <p>A/D или ←/→ - движение</p>
+            <p>Space или W - прыжок</p>
+        </div>
+    </div>
+
+    <script src="js/InputHandler.js"></script>
+    <script src="js/Sprite.js"></script>
+    <script src="js/Player.js"></script>
+    <script src="js/Platform.js"></script>
+    <script src="js/Collision.js"></script>
+    <script src="js/Game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
