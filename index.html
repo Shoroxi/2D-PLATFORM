@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2D Платформер</title>
+    <title>Каменный Платформер</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -31,16 +31,24 @@
             <button id="nextLevelBtn" class="btn">Следующий уровень</button>
         </div>
         <div class="instructions">
-            <p><strong>Управление:</strong></p>
+            <p><strong>⚔️ Управление:</strong></p>
             <p>A/D или ←/→ - движение</p>
             <p>Space или W - прыжок</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #6a6a6a;">⚔️ Каменный платформер ⚔️</p>
+            <p style="margin-top: 10px;">
+                <a href="level-editor.html" style="color: #ffd700; text-decoration: none; font-weight: bold;">📝 Редактор уровней</a>
+            </p>
         </div>
     </div>
 
+    <script src="js/utils/Constants.js"></script>
+    <script src="js/utils/Logger.js"></script>
     <script src="js/InputHandler.js"></script>
-    <script src="js/Sprite.js"></script>
+    <script src="js/SpriteLoader.js"></script>
+    <script src="js/ParallaxBackground.js"></script>
     <script src="js/Player.js"></script>
     <script src="js/Platform.js"></script>
+    <script src="js/Enemy.js"></script>
     <script src="js/Collision.js"></script>
     <script src="js/Game.js"></script>
     <script src="js/main.js"></script>

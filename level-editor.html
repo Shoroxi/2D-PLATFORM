@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактор уровней</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .editor-container {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+        .editor-panel {
+            background: #2a2a2a;
+            padding: 20px;
+            border: 2px solid #6a6a6a;
+            border-radius: 0;
+            min-width: 250px;
+        }
+        .editor-panel h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .tool-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background: #4a4a4a;
+            border: 2px solid #6a6a6a;
+            color: #d4af37;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+        }
+        .tool-btn:hover {
+            background: #5a5a5a;
+            border-color: #8a8a8a;
+        }
+        .tool-btn.active {
+            background: #6a6a6a;
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        #editorCanvas {
+            border: 3px solid #6a6a6a;
+            background: linear-gradient(to bottom, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            cursor: crosshair;
+        }
+        .info-panel {
+            background: #2a2a2a;
+            padding: 15px;
+            border: 2px solid #6a6a6a;
+            margin-top: 10px;
+            color: #d4af37;
+            font-size: 12px;
+        }
+        .save-load-panel {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #6a6a6a;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #1a1a1a;
+            color: #d4af37;
+            border: 2px solid #6a6a6a;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="editor-container">
+        <div class="editor-panel">
+            <h3>⚒️ Редактор уровней</h3>
+            
+            <div>
+                <h4 style="color: #d4af37; margin: 15px 0 10px 0;">Инструменты:</h4>
+                <button class="tool-btn" data-tool="platform">Платформа</button>
+                <button class="tool-btn" data-tool="coin">Монета</button>
+                <button class="tool-btn" data-tool="enemy">Враг</button>
+                <button class="tool-btn" data-tool="start">Старт</button>
+                <button class="tool-btn" data-tool="goal">Финиш</button>
+                <button class="tool-btn" data-tool="delete">Удалить</button>
+            </div>
+
+            <div class="save-load-panel">
+                <h4 style="color: #d4af37; margin: 15px 0 10px 0;">Управление:</h4>
+                <button class="tool-btn" id="clearBtn">Очистить</button>
+                <button class="tool-btn" id="exportBtn">Экспорт JSON</button>
+                <button class="tool-btn" id="importBtn">Импорт JSON</button>
+                <button class="tool-btn" id="testBtn">Тестировать</button>
+            </div>
+
+            <div class="info-panel">
+                <p><strong>Инструкция:</strong></p>
+                <p>1. Выберите инструмент</p>
+                <p>2. Кликните на canvas для размещения</p>
+                <p>3. Для платформ: клик и перетаскивание</p>
+                <p>4. Для удаления: выберите "Удалить" и кликните объект</p>
+            </div>
+
+            <div class="save-load-panel">
+                <h4 style="color: #d4af37; margin: 15px 0 10px 0;">Импорт/Экспорт:</h4>
+                <textarea id="jsonOutput" placeholder="JSON уровень появится здесь..."></textarea>
+            </div>
+        </div>
+
+        <div>
+            <canvas id="editorCanvas" width="1200" height="700"></canvas>
+        </div>
+    </div>
+
+    <script src="js/LevelEditor.js"></script>
+</body>
+</html>
+

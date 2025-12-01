@@ -18,12 +18,24 @@ class Platform {
         this.moveSpeed = 0;
         this.moveDirection = 1; // 1 или -1
         
-        // Цвет в зависимости от типа
+        // Цвет в зависимости от типа (Dark Souls стиль)
         this.colors = {
-            normal: '#4ecdc4',
-            moving: '#ffe66d',
-            breakable: '#ff6b6b'
+            normal: '#4a2c2a',
+            moving: '#6a3c3a',
+            breakable: '#8b0000'
         };
+        
+        // Спрайты (опционально)
+        this.spriteLoader = null;
+        this.useSprite = false;
+    }
+
+    /**
+     * Установка загрузчика спрайтов
+     */
+    setSpriteLoader(spriteLoader) {
+        this.spriteLoader = spriteLoader;
+        this.useSprite = true;
     }
 
     /**
@@ -47,11 +59,13 @@ class Platform {
 
     /**
      * Обновление состояния платформы
+     * @param {number} deltaTime - Время с последнего кадра в секундах
      */
-    update() {
+    update(deltaTime = 0.016) {
         if (this.type === 'moving') {
+            const normalizedDelta = deltaTime * 60; // Нормализуем к 60 FPS
             if (this.direction === 'horizontal') {
-                this.x += this.velocityX;
+                this.x += this.velocityX * normalizedDelta;
                 
                 // Проверяем границы движения
                 if (this.x >= this.startX + this.moveDistance) {
@@ -62,7 +76,7 @@ class Platform {
                     this.velocityX = this.moveSpeed;
                 }
             } else {
-                this.y += this.velocityY;
+                this.y += this.velocityY * normalizedDelta;
                 
                 // Проверяем границы движения
                 if (this.y >= this.startY + this.moveDistance) {
@@ -81,20 +95,73 @@ class Platform {
      * @param {CanvasRenderingContext2D} ctx - Контекст canvas
      */
     render(ctx) {
+        // Если используется спрайт
+        if (this.useSprite && this.spriteLoader) {
+            const tileSize = 64; // Размер спрайта тайла
+            const tilesX = Math.ceil(this.width / tileSize);
+            const tilesY = Math.ceil(this.height / tileSize);
+            
+            for (let ty = 0; ty < tilesY; ty++) {
+                for (let tx = 0; tx < tilesX; tx++) {
+                    let spriteName = 'terrain_stone_block';
+                    
+                    // Определяем тип тайла
+                    if (ty === 0 && tilesY > 1) {
+                        if (tx === 0) spriteName = 'terrain_stone_block_top_left';
+                        else if (tx === tilesX - 1) spriteName = 'terrain_stone_block_top_right';
+                        else spriteName = 'terrain_stone_block_top';
+                    } else if (ty === tilesY - 1 && tilesY > 1) {
+                        if (tx === 0) spriteName = 'terrain_stone_block_bottom_left';
+                        else if (tx === tilesX - 1) spriteName = 'terrain_stone_block_bottom_right';
+                        else spriteName = 'terrain_stone_block_bottom';
+                    } else {
+                        if (tx === 0) spriteName = 'terrain_stone_block_left';
+                        else if (tx === tilesX - 1) spriteName = 'terrain_stone_block_right';
+                        else spriteName = 'terrain_stone_block_center';
+                    }
+                    
+                    if (this.spriteLoader.isLoaded(spriteName)) {
+                        this.spriteLoader.render(
+                            ctx,
+                            spriteName,
+                            this.x + tx * tileSize,
+                            this.y + ty * tileSize,
+                            tileSize,
+                            tileSize
+                        );
+                    }
+                }
+            }
+            return;
+        }
+
+        // Отрисовка по умолчанию (Dark Souls стиль)
         const color = this.colors[this.type] || this.colors.normal;
         
         // Основной прямоугольник
         ctx.fillStyle = color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
         
-        // Обводка для лучшей видимости
-        ctx.strokeStyle = '#fff';
+        // Темная обводка
+        ctx.strokeStyle = '#2a1a1a';
         ctx.lineWidth = 2;
         ctx.strokeRect(this.x, this.y, this.width, this.height);
         
+        // Внутренняя тень
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+        ctx.fillRect(this.x + 2, this.y + 2, this.width - 4, this.height - 4);
+        
+        // Светлая линия сверху (для объема)
+        ctx.strokeStyle = 'rgba(139, 0, 0, 0.5)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x + this.width, this.y);
+        ctx.stroke();
+        
         // Дополнительная визуализация для движущихся платформ
         if (this.type === 'moving') {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.fillStyle = 'rgba(139, 0, 0, 0.2)';
             ctx.fillRect(this.x + 5, this.y + 5, this.width - 10, this.height - 10);
         }
     }

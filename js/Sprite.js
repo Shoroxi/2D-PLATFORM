@@ -19,7 +19,7 @@ class Sprite {
         };
         
         this.image.onerror = () => {
-            console.warn(`Не удалось загрузить спрайт: ${imagePath}`);
+            Logger.warn(`Не удалось загрузить спрайт: ${imagePath}`);
             this.loaded = false;
         };
     }
